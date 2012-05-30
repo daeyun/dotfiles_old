@@ -35,7 +35,7 @@ set wmh=0
 " Execute file being edited with <Shift> + e:
 map <buffer> <S-e> :w<CR>:!python % <CR>
 
-map <C-F12> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+map <S-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 set encoding=utf-8
 
@@ -164,6 +164,8 @@ set nojoinspaces
 "allow deleting selection without updating the clipboard (yank buffer)
 vnoremap x "_x
 vnoremap X "_X
+
+map <F2> :NERDTreeToggle<CR>
 
 " swap colon and semicolon
 " nnoremap ; :

@@ -1,0 +1,11 @@
+[user]
+    name = DaeYun Shin
+    email = daeyun@shin.ws
+
+
+[alias]
+    co = checkout
+    br = branch
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    fix = commit --amend -C HEAD
+    st = status
