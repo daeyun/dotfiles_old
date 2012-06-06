@@ -47,7 +47,7 @@ urxvt*scrollBar:          false
 !urxvt*scrollColor:        #777777
 !urxvt*cursorColor:        #ffcc00
 !urxvt*loginShell:         true
-urxvt*cutchars:           "()*,<>[]{}|'
+urxvt*cutchars:           "()*,<>[]{}|"
 !urxvt*print-pipe:         cat > $(echo urxvt.dump.`date +'%Y%M%d%H%m%S'`)
 urxvt*secondaryScroll:    true
 !urxvt*mapAlert:           true
@@ -55,11 +55,11 @@ urxvt*secondaryScroll:    true
 urxvt*perl-lib:           /usr/lib/urxvt/perl/
 urxvt*background:         rgba:0000/0000/0000/ffff
 
-urxvt*perl-ext-common: default,matcher,tabbed
 urxvt*perl-ext: selection,mark-yank-urls
-urxvt*urlLauncher: ~/bin/firefox
 urxvt*termName: rxvt-unicode
+urxvt*urlLauncher: /usr/bin/firefox
 urxvt*matcher.button: 1
+urxvt*perl-ext-common: default,matcher,tabbed
 
 Xft.autohint: 0
 Xft.antialias: 1
@@ -71,7 +71,6 @@ Xft.lcdfilter: lcddefault
  
 URxvt*font: -*-terminus-medium-r-*-*-*-*-*-*-*-*-*-*
 URxvt*boldFont: -*-terminus-medium-r-*-*-*-*-*-*-*-*-*-*
-urxvt.termName: xterm-256color
 urxvt.scrollBar: false
 !urxvt.imLocale: de_DE.UTF-8
 urxvt.loginShell: true
@@ -92,6 +91,9 @@ urxvt.colorIT: #bbbbbb
 urxvt.colorUL: #999999
 urxvt.underlineColor: #999999
 urxvt.borderless: true
+
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End: \033[4~
 
 URxvt.background: #232323
 URxvt.foreground: #A0A0A0

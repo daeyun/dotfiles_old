@@ -167,6 +167,7 @@ vnoremap X "_X
 
 map <F2> :NERDTreeToggle<CR>
 
+
 " swap colon and semicolon
 " nnoremap ; :
 " nnoremap : ;
