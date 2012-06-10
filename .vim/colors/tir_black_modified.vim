@@ -1,4 +1,3 @@
-tir_black color scheme
  " Based on ir_black from: http://blog.infinitered.com/entries/show/8
  " adds 256 color console support
  " changed WildMenu color to be the same as PMenuSel
@@ -20,8 +19,7 @@ tir_black color scheme
   hi LineNr guifg=#3D3D3D guibg=black ctermfg=239 ctermbg=0
 
   hi VertSplit guifg=#202020 guibg=#202020 ctermfg=235 ctermbg=235 
-  hi StatusLine guifg=#CCCCCC guibg=#202020 gui=italic ctermfg=235
-  ctermbg=235
+  hi StatusLine guifg=#CCCCCC guibg=#202020 gui=italic ctermfg=235 ctermbg=235
   hi StatusLineNC guifg=black guibg=#202020 ctermfg=235 ctermbg=254
 
   hi Folded guifg=#a0a8b0 guibg=#384048 ctermfg=0 ctermbg=60
@@ -33,21 +31,16 @@ tir_black color scheme
   hi WildMenu guifg=black guibg=#cae682 ctermfg=0 ctermbg=195
   hi PmenuSbar guifg=black guibg=white ctermfg=0 ctermbg=15
 
-  hi Error gui=undercurl ctermfg=203 ctermbg=none cterm=underline
-  guisp=#FF6C60
-  hi ErrorMsg guifg=white guibg=#FF6C60 gui=bold ctermfg=white ctermbg=203
-  cterm=bold
-  hi WarningMsg guifg=white guibg=#FF6C60 gui=bold ctermfg=white ctermbg=203
-  cterm=bold
+  hi Error gui=undercurl ctermfg=203 ctermbg=none cterm=underline guisp=#FF6C60
+  hi ErrorMsg guifg=white guibg=#FF6C60 gui=bold ctermfg=white ctermbg=203 cterm=bold
+  hi WarningMsg guifg=white guibg=#FF6C60 gui=bold ctermfg=white ctermbg=203 cterm=bold
 
-  hi ModeMsg guifg=black guibg=#C6C5FE gui=bold ctermfg=0 ctermbg=189
-  cterm=bold
+  hi ModeMsg guifg=black guibg=#C6C5FE gui=bold ctermfg=0 ctermbg=189 cterm=bold
 
   if version >= 700 " Vim 7.x specific colors
    hi CursorLine guibg=#121212 gui=none ctermbg=234 cterm=none
     hi CursorColumn guibg=#121212 gui=none ctermbg=234 cterm=none
-     hi MatchParen guifg=#f6f3e8 guibg=#857b6f gui=bold ctermfg=white
-     ctermbg=darkgray 
+     hi MatchParen guifg=#f6f3e8 guibg=#857b6f gui=bold ctermfg=white ctermbg=darkgray 
       hi Pmenu guifg=#f6f3e8 guibg=#444444 ctermfg=white ctermbg=242 
        hi PmenuSel guifg=#000000 guibg=#cae682 ctermfg=0 ctermbg=195 
         hi Search guifg=#000000 guibg=#cae682 ctermfg=0 ctermbg=195 
