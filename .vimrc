@@ -67,11 +67,17 @@ filetype plugin indent on         " Turn on file type detection.
 filetype plugin on
 
 if has("gui_running")
-  if has("gui_gtk2")
-    set guifont=Bitstream\ Vera\ Sans\ Mono\ 8\.5
-  elseif has("gui_win32")
-    set guifont=Consolas:h11:cANSI
-  endif
+    if has("gui_gtk2")
+        "set guifont=Bitstream\ Vera\ Sans\ Mono\ 9\.5
+        "set guifont=Andale\ Mono\ 9\.5
+        set guifont=Andale\ Mono\ 9.5
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    endif
+    set background=dark
+    colorscheme solarized
+else
+    colorscheme ir_black
 endif
 
 set showcmd                       " Display incomplete commands.
@@ -110,7 +116,6 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{GitBranch()}\ %{exists('*CapsLockSta
 
 let g:zenburn_high_Contrast=1
 
-colorscheme ir_black
 
 
 " Tab mappings.
