@@ -16,8 +16,8 @@ map <m-l> <c-w>l
 map <m-h> <c-w>h
 
 " Window resizing
-map + <C-w>3+
-map - <C-w>3-
+map <m-m> <C-w>3+
+map <m-n> <C-w>3-
 map <C-n> <C-W>3<
 map <C-m> <C-W>3>
 
@@ -44,8 +44,8 @@ imap ,/ </<C-X><C-O>
 imap jj <ESC> 
 
 " Minimalistic gvim interface
-:set guioptions-=T
-:set guioptions-=m
+:set guioptions+=TmlrLRb
+:set guioptions-=TmlrLRb
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -68,16 +68,16 @@ filetype plugin on
 
 if has("gui_running")
     if has("gui_gtk2")
-        "set guifont=Bitstream\ Vera\ Sans\ Mono\ 9\.5
+        set guifont=Bitstream\ Vera\ Sans\ Mono\ 9\.5
         "set guifont=Andale\ Mono\ 9\.5
-        set guifont=Andale\ Mono\ 9.5
+        "set guifont=Andale\ Mono\ 12
     elseif has("gui_win32")
         set guifont=Consolas:h11:cANSI
     endif
-    set background=dark
+    set background=light
     colorscheme solarized
 else
-    colorscheme ir_black
+    colorscheme wombat256mod
 endif
 
 set showcmd                       " Display incomplete commands.
@@ -175,7 +175,6 @@ vnoremap X "_X
 map <F2> :NERDTreeToggle<CR>
 
 map <ESC><ESC> :noh<CR>
-
 
 " swap colon and semicolon
 " nnoremap ; :
