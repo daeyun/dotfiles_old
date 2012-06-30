@@ -181,6 +181,8 @@ map <F2> :NERDTreeToggle<CR>
 
 map <ESC><ESC> :noh<CR>
 
+map <leader>{ :%s/\n[ \t\n]*{/{/g<CR>
+
 " swap colon and semicolon
 " nnoremap ; :
 " nnoremap : ;
