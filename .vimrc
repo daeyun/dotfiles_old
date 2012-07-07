@@ -36,12 +36,15 @@ set wmh=0
 map <buffer> <S-e> :w<CR>:!python % <CR>
 
 map <S-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+map <S-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+map <S-C-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
 
 set encoding=utf-8
 
 let html_no_rendering=1
 imap ,/ </<C-X><C-O>
-imap jj <ESC> 
+inoremap jj <ESC>
+vnoremap <SPACE> <ESC>
 
 " Minimalistic gvim interface
 :set guioptions+=TmlrLRb
@@ -61,8 +64,11 @@ set t_Co=256
 
 " Buffers - explore/next/previous
 nnoremap <silent> <C-b> :BufExplorer<CR>
-nnoremap <silent> <F12> :bn<CR>
-nnoremap <silent> <S-F12> :bp<CR>
+"nnoremap <silent> <F12> :bn<CR>
+"nnoremap <silent> <S-F12> :bp<CR>
+
+nnoremap <silent> <right> :bn<CR>
+nnoremap <silent> <left> :bp<CR>
 
 syntax on                     " Turn on syntax highlighting.
 filetype plugin indent on         " Turn on file type detection.
@@ -181,15 +187,24 @@ map <F2> :NERDTreeToggle<CR>
 
 map <ESC><ESC> :noh<CR>
 
-map <leader>{ :%s/\n[ \t\n]*{/{/g<CR>
+imap <m-BS> <C-W>
+
+nnoremap <Space> 10<C-d>
+nnoremap <S-Space> 10<C-u>
+
+map <leader>[] :%s/\n[ \t\n]*{/{/g<CR>
 
 " swap colon and semicolon
-" nnoremap ; :
+nnoremap ; :
 " nnoremap : ;
 " 
-" vnoremap ; :
+vnoremap ; :
 " vnoremap : ;
 
+inoremap <C-j> <C-o>j
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>l
+inoremap <C-k> <C-o>k
 " Automatic fold settings for specific files. Uncomment to use.
 " autocmd FileType ruby setlocal foldmethod=syntax
 " autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
