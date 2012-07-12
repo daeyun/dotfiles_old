@@ -36,7 +36,6 @@ set wmh=0
 map <buffer> <S-e> :w<CR>:!python % <CR>
 
 map <S-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-map <S-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 map <S-C-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
 
 set encoding=utf-8
@@ -44,6 +43,7 @@ set encoding=utf-8
 let html_no_rendering=1
 imap ,/ </<C-X><C-O>
 inoremap jj <ESC>
+inoremap ii <ESC>
 vnoremap <SPACE> <ESC>
 
 " Minimalistic gvim interface
@@ -58,7 +58,7 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
-map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+map <leader>c :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 set t_Co=256
 
@@ -75,8 +75,6 @@ filetype plugin indent on         " Turn on file type detection.
 set nocp  "for omnicppcomplete
 filetype plugin on
 
-
-
 if has("gui_running")
     if has("gui_gtk2")
         set guifont=Bitstream\ Vera\ Sans\ Mono\ 9\.5
@@ -85,8 +83,9 @@ if has("gui_running")
     elseif has("gui_win32")
         set guifont=Consolas:h11:cANSI
     endif
-    set background=light
-    colorscheme solarized
+
+    let g:zenburn_high_Contrast=1
+    colorscheme zenburn
 else
     colorscheme wombat256mod
 endif
@@ -125,7 +124,6 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{GitBranch()}\ %{exists('*CapsLockSta
 "set statusline=%F%m%r%h%w\ [FF=%{&ff}]\ [T=%Y]\ [A=\%03.3b]\ [H=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 "set statusline=%{GitBranch()}
 
-let g:zenburn_high_Contrast=1
 
 
 
@@ -194,12 +192,16 @@ nnoremap <S-Space> 10<C-u>
 
 map <leader>[] :%s/\n[ \t\n]*{/{/g<CR>
 
+cmap ww w<cr>
+
 " swap colon and semicolon
 nnoremap ; :
 " nnoremap : ;
 " 
 vnoremap ; :
 " vnoremap : ;
+
+set rnu
 
 inoremap <C-j> <C-o>j
 inoremap <C-h> <C-o>h
