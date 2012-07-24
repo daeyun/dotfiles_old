@@ -6,6 +6,8 @@ call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 "end of pathogen
 
+filetype plugin on
+
 set foldmethod=indent
 set foldlevel=99
 
@@ -35,6 +37,8 @@ set wmh=0
 " Execute file being edited with <Shift> + e:
 map <buffer> <S-e> :w<CR>:!python % <CR>
 
+set modeline
+
 map <S-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 map <S-C-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
 
@@ -44,12 +48,12 @@ let html_no_rendering=1
 imap ,/ </<C-X><C-O>
 inoremap jj <ESC>
 inoremap ii <ESC>
-vnoremap <SPACE> <ESC>
 
 " Minimalistic gvim interface
 :set guioptions+=TmlrLRb
 :set guioptions-=TmlrLRb
 
+let python_highlight_all = 1
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -58,7 +62,8 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
-map <leader>c :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" map <leader>c :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+map <leader>c :!ctags -R ./*<CR>
 
 set t_Co=256
 
@@ -70,10 +75,14 @@ nnoremap <silent> <C-b> :BufExplorer<CR>
 nnoremap <silent> <right> :bn<CR>
 nnoremap <silent> <left> :bp<CR>
 
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+
 syntax on                     " Turn on syntax highlighting.
 filetype plugin indent on         " Turn on file type detection.
 set nocp  "for omnicppcomplete
-filetype plugin on
 
 if has("gui_running")
     if has("gui_gtk2")
@@ -87,7 +96,7 @@ if has("gui_running")
     let g:zenburn_high_Contrast=1
     colorscheme zenburn
 else
-    colorscheme wombat256mod
+    " colorscheme zenburn
 endif
 
 set showcmd                       " Display incomplete commands.
@@ -125,7 +134,18 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{GitBranch()}\ %{exists('*CapsLockSta
 "set statusline=%{GitBranch()}
 
 
+" Highlight end of line whitespace.
+" highlight WhitespaceEOL ctermbg=red guibg=red
+" match WhitespaceEOL /\s\+$/
 
+" Execute a selection of code
+" Use VISUAL to select a range and then hit ctrl-h to execute it.
+" python << EOL
+" import vim
+" def EvaluateCurrentRange():
+"     eval(compile('\n'.join(vim.current.range),'','exec'),globals())
+" EOL
+" map <leader>h :py EvaluateCurrentRange()<cr>
 
 " Tab mappings.
 map <leader>tt :tabnew<cr>
@@ -181,14 +201,17 @@ set nojoinspaces
 vnoremap x "_x
 vnoremap X "_X
 
+map <C-t> :TaskList<CR>
+map T :TlistToggle<CR>
+
 map <F2> :NERDTreeToggle<CR>
 
 map <ESC><ESC> :noh<CR>
 
 imap <m-BS> <C-W>
 
-nnoremap <Space> 10<C-d>
-nnoremap <S-Space> 10<C-u>
+"nnoremap <Space> 10<C-d>
+"nnoremap <S-Space> 10<C-u>
 
 map <leader>[] :%s/\n[ \t\n]*{/{/g<CR>
 
@@ -197,16 +220,10 @@ cmap ww w<cr>
 " swap colon and semicolon
 nnoremap ; :
 " nnoremap : ;
-" 
+"
 vnoremap ; :
 " vnoremap : ;
 
-set rnu
-
-inoremap <C-j> <C-o>j
-inoremap <C-h> <C-o>h
-inoremap <C-l> <C-o>l
-inoremap <C-k> <C-o>k
 " Automatic fold settings for specific files. Uncomment to use.
 " autocmd FileType ruby setlocal foldmethod=syntax
 " autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2

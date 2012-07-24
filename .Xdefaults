@@ -1,59 +1,62 @@
 ! terminal colors ------------------------------------------------------------
 
 ! tangoesque scheme
-*background:  #222222
-*foreground:  #dedede
+*background: #222222
+*foreground: #dedede
 ! Black
-*color0:      #000000
-*color8:      #555753
+*color0: #000000
+*color8: #555753
 ! Red
-*color1:      #ff6565
-*color9:      #ff8d8d
+*color1: #ff6565
+*color9: #ff8d8d
 ! Green
-*color2:      #93d44f
-*color10:     #c8e7a8
+*color2: #93d44f
+*color10: #c8e7a8
 ! Yellow
-*color3:      #eab93d
-*color11:     #ffc123
+*color3: #eab93d
+*color11: #ffc123
 ! Blue
-*color4:      #204a87
-*color12:     #3465a4
+*color4: #204a87
+*color12: #3465a4
 ! Mangenta
-*color5:      #ce5c00
-*color13:     #f57900
-! Cyan 
-*color6:      #89b6e2
-*color14:     #46a4ff
+*color5: #ce5c00
+*color13: #f57900
+! Cyan
+*color6: #89b6e2
+*color14: #46a4ff
 ! White
-*color7:      #cccccc
-*color15:     #ffffff
+*color7: #cccccc
+*color15: #ffffff
 
 ! rxvt-unicode ---------------------------------------------------------------
-urxvt*font:     xft:bitstream vera sans mono:pixelsize=11
-urxvt*boldFont: xft:bitstream vera sans mono bold:pixelsize=11
+urxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=11,\
+            xft:Baekmuk Gulim
+ 
+urxvt*boldFont: xft:Bitstream Vera Sans Mono Bold:pixelsize=11,\
+            xft:Baekmuk Gulim
 
-urxvt*geometry:           160x50
-!urxvt*internalBorder:     5
-urxvt*inheritPixmap:      false
-!urxvt*depth:              24
-urxvt*depth:              32
-urxvt*saveLines:          32767
-!urxvt*visualBell:         true
-urxvt*scrollTtyKeypress:  true
-urxvt*scrollWithBuffer:   false
-urxvt*scrollTtyOutput:    false
-urxvt*scrollBar:          false
-!urxvt*scrollstyle:        plain
-!urxvt*scrollColor:        #777777
-!urxvt*cursorColor:        #ffcc00
-!urxvt*loginShell:         true
-urxvt*cutchars:           "()*,<>[]{}|"
-!urxvt*print-pipe:         cat > $(echo urxvt.dump.`date +'%Y%M%d%H%m%S'`)
-urxvt*secondaryScroll:    true
-!urxvt*mapAlert:           true
-!urxvt*utmpInhibit:        true
-urxvt*perl-lib:           /usr/lib/urxvt/perl/
-urxvt*background:         rgba:0000/0000/0000/ffff
+urxvt*geometry: 160x50
+!urxvt*internalBorder: 5
+urxvt*inheritPixmap: false
+!urxvt*depth: 24
+urxvt*depth: 32
+urxvt*saveLines: 32767
+!urxvt*visualBell: true
+urxvt*scrollTtyKeypress: true
+urxvt*scrollWithBuffer: false
+urxvt*scrollTtyOutput: false
+urxvt*scrollBar: false
+!urxvt*scrollstyle: plain
+!urxvt*scrollColor: #777777
+!urxvt*cursorColor: #ffcc00
+!urxvt*loginShell: true
+urxvt*cutchars: "()*,<>[]{}|"
+!urxvt*print-pipe: cat > $(echo urxvt.dump.`date +'%Y%M%d%H%m%S'`)
+urxvt*secondaryScroll: true
+!urxvt*mapAlert: true
+!urxvt*utmpInhibit: true
+urxvt*perl-lib: /usr/lib/urxvt/perl/
+urxvt*background: rgba:0000/0000/0000/ffff
 
 urxvt*perl-ext: selection,mark-yank-urls
 urxvt*termName: rxvt-unicode
@@ -98,30 +101,30 @@ URxvt*keysym.End: \033[4~
 URxvt.background: #232323
 URxvt.foreground: #A0A0A0
 
-URxvt.colorBD:    #CFCFCF
-URxvt.colorUL:    #A0A0A0
-URxvt.colorIT:    #686868
+URxvt.colorBD: #CFCFCF
+URxvt.colorUL: #A0A0A0
+URxvt.colorIT: #686868
 !BLK
-URxvt.color0:     #303030
-URxvt.color8:     #686868
+URxvt.color0: #303030
+URxvt.color8: #686868
 !RED
-URxvt.color9:     #FFA7DA
-URxvt.color1:     #D370A3
+URxvt.color9: #FFA7DA
+URxvt.color1: #D370A3
 !GRN
-URxvt.color10:    #A3D572
-URxvt.color2:     #6D9E3F
+URxvt.color10: #A3D572
+URxvt.color2: #6D9E3F
 !BLU
-URxvt.color12:    #98CBFE
-URxvt.color4:     #6095C5
+URxvt.color12: #98CBFE
+URxvt.color4: #6095C5
 !YEL
-URxvt.color11:    #EFBD8B
-URxvt.color3:     #B58858
+URxvt.color11: #EFBD8B
+URxvt.color3: #B58858
 !CYN
-URxvt.color14:    #75DAA9
-URxvt.color6:     #3BA275
+URxvt.color14: #75DAA9
+URxvt.color6: #3BA275
 !MAG
-URxvt.color13:    #E5B0FF
-URxvt.color5:     #AC7BDE
+URxvt.color13: #E5B0FF
+URxvt.color5: #AC7BDE
 !WHT
-URxvt.color7:     #CFCFCF
-URxvt.color15:    #FFFFFF
+URxvt.color7: #CFCFCF
+URxvt.color15: #FFFFFF
