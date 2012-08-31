@@ -31,6 +31,10 @@ map <m-L> <C-w>L
 map <m-R> <C-w>R
 map <m-r> <C-w>r
 
+vnoremap <C-j> :m'>+<CR>gv=gv
+vnoremap <C-k> :m-2<CR>gv=gv
+vnoremap <S-Tab> <gv
+vnoremap <Tab> >gv
 
 set wmh=0
 
@@ -160,18 +164,7 @@ map <leader>tm :tabmove
 
 cmap w!! %!sudo tee > /dev/null %
 
-nnoremap <C-j> :m+<CR>==
-nnoremap <C-k> :m-2<CR>==
-nnoremap <C-h> <<
-nnoremap <C-l> >>
-inoremap <C-j> <Esc>:m+<CR>==gi
-inoremap <C-k> <Esc>:m-2<CR>==gi
-inoremap <C-h> <Esc><<`]a
-inoremap <C-l> <Esc>>>`]a
-vnoremap <C-j> :m'>+<CR>gv=gv
-vnoremap <C-k> :m-2<CR>gv=gv
-vnoremap <C-h> <gv
-vnoremap <C-l> >gv
+
 
 " disable flashing and beeping
 set noerrorbells visualbell t_vb=
@@ -215,8 +208,6 @@ imap <m-BS> <C-W>
 
 map <leader>[] :%s/\n[ \t\n]*{/{/g<CR>
 
-cmap ww w<cr>
-
 " swap colon and semicolon
 nnoremap ; :
 " nnoremap : ;
@@ -227,3 +218,6 @@ vnoremap ; :
 " Automatic fold settings for specific files. Uncomment to use.
 " autocmd FileType ruby setlocal foldmethod=syntax
 " autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+
+autocmd BufWritePost,FileWritePost *.coffee silent !coffee -c <afile>
+autocmd BufWritePost,FileWritePost *.less silent !lessc <afile> <afile>:r.css
