@@ -1,12 +1,44 @@
-set nocompatible
+set nocompatible               " be iMproved
+filetype off                   " required!
 
-"pathogen
-filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-"end of pathogen
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
-filetype plugin on
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+" original repos on github
+Bundle 'tpope/vim-fugitive'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-rails.git'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'mattn/zencoding-vim'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'nvie/vim-flake8'
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'mru.vim'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+" ...
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+"
 
 set foldmethod=indent
 set foldlevel=99
@@ -31,66 +63,42 @@ map <m-L> <C-w>L
 map <m-R> <C-w>R
 map <m-r> <C-w>r
 
-vnoremap <C-j> :m'>+<CR>gv=gv
-vnoremap <C-k> :m-2<CR>gv=gv
-vnoremap <S-Tab> <gv
-vnoremap <Tab> >gv
-
 set wmh=0
-
-" Execute file being edited with <Shift> + e:
-map <buffer> <S-e> :w<CR>:!python % <CR>
-
 set modeline
 
 map <S-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-map <S-C-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
+map <C-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
 
 set encoding=utf-8
 
 let html_no_rendering=1
 imap ,/ </<C-X><C-O>
 inoremap jj <ESC>
-inoremap ii <ESC>
+
+"let g:ycm_global_ycm_extra_conf = '/home/daeyun/.vim/extra/'
 
 " Minimalistic gvim interface
 :set guioptions+=TmlrLRb
 :set guioptions-=TmlrLRb
 
-let python_highlight_all = 1
+filetype plugin on
+
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
-" map <leader>c :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-map <leader>c :!ctags -R ./*<CR>
-
 set t_Co=256
-
-" Buffers - explore/next/previous
-nnoremap <silent> <C-b> :BufExplorer<CR>
-"nnoremap <silent> <F12> :bn<CR>
-"nnoremap <silent> <S-F12> :bp<CR>
 
 nnoremap <silent> <right> :bn<CR>
 nnoremap <silent> <left> :bp<CR>
 
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-
 syntax on                     " Turn on syntax highlighting.
-filetype plugin indent on         " Turn on file type detection.
-set nocp  "for omnicppcomplete
 
 if has("gui_running")
     if has("gui_gtk2")
-        set guifont=Bitstream\ Vera\ Sans\ Mono\ 9\.5
+        set guifont=Bitstream\ Vera\ Sans\ Mono\ 9
         "set guifont=Andale\ Mono\ 9\.5
         "set guifont=Andale\ Mono\ 12
     elseif has("gui_win32")
@@ -100,7 +108,7 @@ if has("gui_running")
     let g:zenburn_high_Contrast=1
     colorscheme zenburn
 else
-    " colorscheme zenburn
+    colorscheme default
 endif
 
 set showcmd                       " Display incomplete commands.
@@ -133,23 +141,17 @@ set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 
 set laststatus=2                  " Show the status line all the time
 
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{GitBranch()}\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 "set statusline=%F%m%r%h%w\ [FF=%{&ff}]\ [T=%Y]\ [A=\%03.3b]\ [H=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 "set statusline=%{GitBranch()}
 
+" toggle paste mode
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
 
-" Highlight end of line whitespace.
-" highlight WhitespaceEOL ctermbg=red guibg=red
-" match WhitespaceEOL /\s\+$/
-
-" Execute a selection of code
-" Use VISUAL to select a range and then hit ctrl-h to execute it.
-" python << EOL
-" import vim
-" def EvaluateCurrentRange():
-"     eval(compile('\n'.join(vim.current.range),'','exec'),globals())
-" EOL
-" map <leader>h :py EvaluateCurrentRange()<cr>
+map <leader>n :NERDTreeToggle<cr>
+map <leader>m :MRU<cr>
 
 " Tab mappings.
 map <leader>tt :tabnew<cr>
@@ -164,18 +166,12 @@ map <leader>tm :tabmove
 
 cmap w!! %!sudo tee > /dev/null %
 
-
-
 " disable flashing and beeping
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
 set history=50
 set viminfo='20,\"50
-
-"undo & redo
-noremap <F9> g-
-noremap <F10> g+
 
 " scroll 3 lines with arrow keys
 noremap <down> 3<C-e>
@@ -194,19 +190,14 @@ set nojoinspaces
 vnoremap x "_x
 vnoremap X "_X
 
-map <C-t> :TaskList<CR>
-map T :TlistToggle<CR>
-
-map <F2> :NERDTreeToggle<CR>
-
 map <ESC><ESC> :noh<CR>
-
-imap <m-BS> <C-W>
 
 "nnoremap <Space> 10<C-d>
 "nnoremap <S-Space> 10<C-u>
 
 map <leader>[] :%s/\n[ \t\n]*{/{/g<CR>
+
+cmap ww w<cr>
 
 " swap colon and semicolon
 nnoremap ; :
@@ -215,9 +206,23 @@ nnoremap ; :
 vnoremap ; :
 " vnoremap : ;
 
-" Automatic fold settings for specific files. Uncomment to use.
-" autocmd FileType ruby setlocal foldmethod=syntax
-" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+nnoremap <C-j> :m+<CR>==
+nnoremap <C-k> :m-2<CR>==
+nnoremap <C-h> <<
+nnoremap <C-l> >>
+inoremap <C-j> <Esc>:m+<CR>==gi
+inoremap <C-k> <Esc>:m-2<CR>==gi
+inoremap <C-h> <Esc><<`]a
+inoremap <C-l> <Esc>>>`]a
+vnoremap <C-j> :m'>+<CR>gv=gv
+vnoremap <C-k> :m-2<CR>gv=gv
 
-autocmd BufWritePost,FileWritePost *.coffee silent !coffee -c <afile>
-autocmd BufWritePost,FileWritePost *.less silent !lessc <afile> <afile>:r.css
+" Command-T
+nnoremap <silent> <Space> :CommandTBuffer<CR>
+
+" Run Flake8
+autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
+
+" Toggle comments
+vmap <Space> <leader>ci
+nmap <S-Space> <leader>ci
