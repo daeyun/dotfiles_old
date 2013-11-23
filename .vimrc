@@ -38,7 +38,8 @@ filetype plugin indent on     " required!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
-"
+
+setlocal cm=blowfish
 
 set foldmethod=indent
 set foldlevel=99
@@ -73,7 +74,6 @@ set encoding=utf-8
 
 let html_no_rendering=1
 imap ,/ </<C-X><C-O>
-inoremap jj <ESC>
 
 "let g:ycm_global_ycm_extra_conf = '/home/daeyun/.vim/extra/'
 
@@ -89,6 +89,8 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
 set t_Co=256
 
 nnoremap <silent> <right> :bn<CR>
