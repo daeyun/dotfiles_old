@@ -21,6 +21,8 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'nvie/vim-flake8'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-notes'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'mru.vim'
