@@ -107,7 +107,7 @@ if has("gui_running")
     let g:zenburn_high_Contrast=1
     colorscheme zenburn
 else
-    colorscheme default
+    colorscheme slate
 endif
 
 set showcmd                       " Display incomplete commands.
