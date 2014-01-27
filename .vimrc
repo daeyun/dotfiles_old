@@ -225,3 +225,6 @@ autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
 " Toggle comments
 vmap <Space> <leader>ci
 nmap <S-Space> <leader>ci
+
+" press <F9> to execute the current buffer with python
+nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
