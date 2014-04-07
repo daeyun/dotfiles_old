@@ -7,8 +7,6 @@ my dotfiles.
 
 ```
 cd ~
-
 git clone git@github.com:daeyun/dotfiles.git
-
 ln -nsf ~/dotfiles/.vim* .
 ```
