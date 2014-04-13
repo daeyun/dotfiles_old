@@ -1,11 +1,12 @@
 [user]
     name = Daeyun Shin
-    email = daeyunshin@gmail.com
-
-
+    email = daeyun@daeyunshin.com
+[push]
+    default = matching
 [alias]
-    co = checkout
-    br = branch
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-    fix = commit --amend -C HEAD
-    st = status
+    undo = reset --hard
+    ci = commit
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
