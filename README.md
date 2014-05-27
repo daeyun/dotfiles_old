@@ -13,12 +13,13 @@ Clone Vim
 
 ```
 mkdir -p ~/git
-git clone git@github.com:b4winckler/vim.git ~/git
+git clone git@github.com:b4winckler/vim.git ~/git/vim
 ```
 
 [Build Vim](http://vim.wikia.com/wiki/Building_Vim) with Python and Ruby enabled:
 
 ```
+cd ~/git/vim
 ./configure \
     --enable-gui=gnome3 \
     --enable-multibyte \
