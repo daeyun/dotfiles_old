@@ -30,6 +30,14 @@ git clone git@github.com:b4winckler/vim.git ~/git
 
 ####Set up Vim
 
+Clone this repository and symlink dotfiles
+
+```
+cd ~
+git clone git@github.com:daeyun/dotfiles.git
+ln -nsf ~/dotfiles/.vim* .
+```
+
 Set up Vundle
 
 ```
@@ -43,12 +51,4 @@ Set up [YouCompleteMe](https://github.com/Valloric/YouCompleteMe):
 apt-get install cmake
 cd ~/.vim/bundle/YouCompleteMe
 ./install.sh --clang-completer
-```
-
-Symlink dotfiles
-
-```
-cd ~
-git clone git@github.com:daeyun/dotfiles.git
-ln -nsf ~/dotfiles/.vim* .
 ```
