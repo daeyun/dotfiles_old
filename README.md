@@ -53,3 +53,12 @@ apt-get install cmake
 cd ~/.vim/bundle/YouCompleteMe
 ./install.sh --clang-completer
 ```
+
+Set up command-t:
+
+```
+cd ~/.vim/bundle/command-t/ruby/command-t/
+ruby extconf.rb
+make
+
+```
