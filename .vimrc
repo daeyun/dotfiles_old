@@ -5,8 +5,8 @@ if has('nvim')
     runtime! plugin/python_setup.vim
 endif
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required! 
@@ -39,20 +39,24 @@ Bundle 'bling/vim-airline'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'godlygeek/tabular'
 Bundle 'plasticboy/vim-markdown'
+Bundle 'lazywei/vim-matlab'
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 " ...
 
+call vundle#end()
 filetype plugin indent on     " required!
-"
+
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just
+" :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to
+" auto-approve removal
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" Put your non-Plugin stuff after this line
 
 set foldmethod=indent
 set foldlevel=99
