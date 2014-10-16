@@ -10,3 +10,5 @@
     whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+[core]
+	editor = vim

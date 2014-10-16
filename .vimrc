@@ -1,6 +1,10 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 
+if has('nvim')
+    runtime! plugin/python_setup.vim
+endif
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -18,16 +22,23 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'mattn/zencoding-vim'
-Bundle 'Valloric/YouCompleteMe'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'nvie/vim-flake8'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-notes'
+Bundle 'groenewege/vim-less'
+Bundle 'ingydotnet/yaml-vim'
+Bundle 'derekwyatt/vim-scala'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'kien/ctrlp.vim'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'mru.vim'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'bling/vim-airline'
+Bundle 'airblade/vim-gitgutter'
 " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
+"Bundle 'git://git.wincent.com/command-t.git'
 " ...
 
 filetype plugin indent on     " required!
@@ -40,8 +51,6 @@ filetype plugin indent on     " required!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
-
-setlocal cm=blowfish
 
 set foldmethod=indent
 set foldlevel=99
@@ -75,7 +84,6 @@ map <C-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Cont
 set encoding=utf-8
 
 let html_no_rendering=1
-imap ,/ </<C-X><C-O>
 
 "let g:ycm_global_ycm_extra_conf = '/home/daeyun/.vim/extra/'
 
@@ -104,10 +112,16 @@ if has("gui_running")
         set guifont=Consolas:h11:cANSI
     endif
 
-    let g:zenburn_high_Contrast=1
-    colorscheme zenburn
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        set guifont=Inconsolata\ for\ Powerline:h15
+    endif
+
+    "let g:zenburn_high_Contrast=1
+    "colorscheme zenburn
+    colorscheme molokai
 else
-    colorscheme slate
+    colorscheme molokai
 endif
 
 set showcmd                       " Display incomplete commands.
@@ -140,7 +154,7 @@ set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 
 set laststatus=2                  " Show the status line all the time
 
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 "set statusline=%F%m%r%h%w\ [FF=%{&ff}]\ [T=%Y]\ [A=\%03.3b]\ [H=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 "set statusline=%{GitBranch()}
 
@@ -216,9 +230,6 @@ inoremap <C-l> <Esc>>>`]a
 vnoremap <C-j> :m'>+<CR>gv=gv
 vnoremap <C-k> :m-2<CR>gv=gv
 
-" Command-T
-nnoremap <silent> <Space> :CommandTBuffer<CR>
-
 " Run Flake8
 autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
 
@@ -228,3 +239,48 @@ nmap <S-Space> <leader>ci
 
 " press <F9> to execute the current buffer with python
 nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+
+autocmd BufWritePost *.coffee compiler cake
+autocmd BufWritePost *.coffee silent make! build-dev
+
+autocmd BufWritePost *.less compiler cake
+autocmd BufWritePost *.less silent make! build-css
+
+map j gj
+map k gk
+
+nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
+let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
+
+" CtrlP
+nnoremap <silent> <Space> :CtrlPBuffer<CR>
+
+" Powerline
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols = 'fancy'
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set termencoding=utf-8
+
+let g:airline#extensions#tabline#enabled = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+"let g:airline_left_sep='>'
+let g:airline_left_sep = ''
+"let g:airline_right_sep='<'
+let g:airline_right_sep = ''
+
+map <C-c> :noh<CR>
+
+inoremap <C-e> <C-o>$
+inoremap <C-a> <C-o>0
+autocmd! BufWritePost .vimrc source %
