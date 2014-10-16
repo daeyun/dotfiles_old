@@ -37,6 +37,8 @@ Bundle 'mru.vim'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'bling/vim-airline'
 Bundle 'airblade/vim-gitgutter'
+Bundle 'godlygeek/tabular'
+Bundle 'plasticboy/vim-markdown'
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 " ...
@@ -119,9 +121,9 @@ if has("gui_running")
 
     "let g:zenburn_high_Contrast=1
     "colorscheme zenburn
-    colorscheme molokai
+    colorscheme Tomorrow-Night
 else
-    colorscheme molokai
+    colorscheme Tomorrow-Night
 endif
 
 set showcmd                       " Display incomplete commands.
@@ -284,3 +286,5 @@ map <C-c> :noh<CR>
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
 autocmd! BufWritePost .vimrc source %
+
+let g:vim_markdown_folding_disabled=1
