@@ -40,6 +40,10 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'godlygeek/tabular'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'lazywei/vim-matlab'
+Bundle 'lervag/vim-latex'
+Bundle 'Shougo/neocomplete.vim'
+Bundle 'Shougo/neosnippet'
+Bundle 'Shougo/neosnippet-snippets'
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 " ...
@@ -259,9 +263,9 @@ nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+"set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
-let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
+"let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
 
 " CtrlP
 nnoremap <silent> <Space> :CtrlPBuffer<CR>
