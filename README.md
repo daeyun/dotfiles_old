@@ -5,9 +5,9 @@ my dotfiles.
 
 ## Usage
 
-###Vim
+### Vim
 
-####Build Vim
+#### Build Vim
 
 Clone Vim
 
@@ -26,10 +26,11 @@ cd ~/git/vim
     --enable-pythoninterp \
     --enable-rubyinterp \
     --with-ruby-command=/usr/bin/ruby \
+    --enable-luainterp \
     --with-features=huge
 ```
 
-####Set up Vim
+#### Set up Vim
 
 Clone this repository and symlink dotfiles
 
@@ -52,13 +53,4 @@ Set up [YouCompleteMe](https://github.com/Valloric/YouCompleteMe):
 apt-get install cmake
 cd ~/.vim/bundle/YouCompleteMe
 ./install.sh --clang-completer
-```
-
-Set up command-t:
-
-```
-cd ~/.vim/bundle/command-t/ruby/command-t/
-ruby extconf.rb
-make
-
 ```
