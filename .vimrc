@@ -31,6 +31,8 @@ Bundle 'ingydotnet/yaml-vim'
 Bundle 'derekwyatt/vim-scala'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'kien/ctrlp.vim'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'mru.vim'
@@ -295,4 +297,6 @@ inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
 autocmd! BufWritePost .vimrc source %
 
-let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_folding_disabled = 1
+
+let g:gist_post_private = 1
