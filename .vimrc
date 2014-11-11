@@ -21,7 +21,7 @@ Bundle 'tpope/vim-rails.git'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'mattn/zencoding-vim'
+Bundle 'mattn/emmet-vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'nvie/vim-flake8'
 Bundle 'xolox/vim-misc'
@@ -272,9 +272,6 @@ let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 " CtrlP
 nnoremap <silent> <Space> :CtrlPBuffer<CR>
 
-" Powerline
-set guifont=Inconsolata\ for\ Powerline:h15
-let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
@@ -286,10 +283,10 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
+let g:airline_powerline_fonts = 1
+
 "let g:airline_left_sep='>'
-let g:airline_left_sep = ''
 "let g:airline_right_sep='<'
-let g:airline_right_sep = ''
 
 map <C-c> :noh<CR>
 
@@ -300,3 +297,26 @@ autocmd! BufWritePost .vimrc source %
 let g:vim_markdown_folding_disabled = 1
 
 let g:gist_post_private = 1
+
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" automatic paste mode
+imap <D-v> ^O"+p
+inoremap <C-v> <ESC>"+p`]a
