@@ -1,3 +1,15 @@
+"================================================
+"
+"   .vimrc - collection of vim configurations
+"
+"   Daeyun Shin (daeyun@daeyunshin.com)
+"   Created         Aug 01, 2011
+"   Last modified   Nov 22, 2014
+"
+"================================================
+
+" Plugin manager
+" ================================================================================
 set nocompatible               " be iMproved
 filetype off                   " required!
 
@@ -8,65 +20,103 @@ endif
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/Vundle.vim'
+" Vundle
+Plugin 'gmarik/Vundle.vim'
 
-" My Bundles here:
-"
-" original repos on github
-Bundle 'tpope/vim-fugitive'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'mattn/emmet-vim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'nvie/vim-flake8'
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-notes'
-Bundle 'groenewege/vim-less'
-Bundle 'ingydotnet/yaml-vim'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'mru.vim'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'bling/vim-airline'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'godlygeek/tabular'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'lazywei/vim-matlab'
-Bundle 'lervag/vim-latex'
-Bundle 'Shougo/neocomplete.vim'
-Bundle 'Shougo/neosnippet'
-Bundle 'Shougo/neosnippet-snippets'
-" non github repos
-"Bundle 'git://git.wincent.com/command-t.git'
-" ...
+" Original repos on github
+Plugin 'tpope/vim-fugitive'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'tpope/vim-rails.git'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'mattn/emmet-vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'nvie/vim-flake8'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
+Plugin 'groenewege/vim-less'
+Plugin 'ingydotnet/yaml-vim'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'lazywei/vim-matlab'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'reedes/vim-pencil'
 
-call vundle#end()
-filetype plugin indent on     " required!
+" Plugin from http://vim-scripts.org/vim/scripts.html
+Plugin 'L9'
+Plugin 'mru.vim'
 
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just
-" :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to
-" auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" Forked repos
+Plugin 'daeyun/vim-latex'
 
-set foldmethod=indent
-set foldlevel=99
+call vundle#end()            " required
+filetype plugin indent on    " required
 
+
+" Plugin-dependent key bindings
+" ================================================================================
+" CtrlP
+" --------------------------------------------------------------------------------
+nnoremap <silent> <Space> :CtrlPBuffer<CR>
+" Specify an external tool for listing files
+let g:ctrlp_user_command = 'find %s -type f'
+" Windows
+"let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
+" Ignore those files
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v\.(exe|so|dll)$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+    \ }
+
+
+" YouCompleteMe
+" --------------------------------------------------------------------------------
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+
+
+" Neosnippet
+" --------------------------------------------------------------------------------
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+
+" NERD Tree
+" --------------------------------------------------------------------------------
+map <leader>n :NERDTreeToggle<cr>
+
+
+" MRU
+" --------------------------------------------------------------------------------
+map <leader>m :MRU<cr>
+
+
+" Key bindings based on build-in features
+" ================================================================================
 " Easier window navigation
 map <m-j> <c-w>j
 map <m-k> <c-w>k
@@ -87,98 +137,16 @@ map <m-L> <C-w>L
 map <m-R> <C-w>R
 map <m-r> <C-w>r
 
-set wmh=0
-set modeline
-
-map <S-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-map <C-F11> :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
-
-set encoding=utf-8
-
-let html_no_rendering=1
-
-"let g:ycm_global_ycm_extra_conf = '/home/daeyun/.vim/extra/'
-
-" Minimalistic gvim interface
-:set guioptions+=TmlrLRb
-:set guioptions-=TmlrLRb
-
-filetype plugin on
-
-autocmd Filetype gitcommit setlocal spell textwidth=72
-autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
-set t_Co=256
-
+" Press left and right arrow keys to switch buffers
 nnoremap <silent> <right> :bn<CR>
 nnoremap <silent> <left> :bp<CR>
 
-syntax on                     " Turn on syntax highlighting.
-
-if has("gui_running")
-    if has("gui_gtk2")
-        set guifont=Bitstream\ Vera\ Sans\ Mono\ 9
-        "set guifont=Andale\ Mono\ 9\.5
-        "set guifont=Andale\ Mono\ 12
-    elseif has("gui_win32")
-        set guifont=Consolas:h11:cANSI
-    endif
-
-    let s:uname = system("uname")
-    if s:uname == "Darwin\n"
-        set guifont=Inconsolata\ for\ Powerline:h15
-    endif
-
-    "let g:zenburn_high_Contrast=1
-    "colorscheme zenburn
-    colorscheme Tomorrow-Night
-else
-    colorscheme Tomorrow-Night
-endif
-
-set showcmd                       " Display incomplete commands.
-set showmode                      " Display the mode you're in.
-
-set backspace=indent,eol,start    " Intuitive backspacing.
-
-set hidden                        " Handle multiple buffers better.
-
-set wildmenu                      " Enhanced command line completion.
-set wildmode=list:longest         " Complete files like a shell.
-
-set ignorecase                    " Case-insensitive searching.
-set smartcase                     " But case-sensitive if expression contains a capital letter.
-
-set number                        " Show line numbers.
-set ruler                         " Show cursor position.
-
-set incsearch                     " Highlight matches as you type.
-set hlsearch                      " Highlight matches.
-
-set wrap                          " Turn on line wrapping.
-set scrolloff=3                   " Show 3 lines of context around the cursor.
-
-set title                         " Set the terminal's title
-
-set nobackup                      " Don't make a backup before overwriting a file.
-set nowritebackup                 " And again.
-set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
-
-set laststatus=2                  " Show the status line all the time
-
-"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
-"set statusline=%F%m%r%h%w\ [FF=%{&ff}]\ [T=%Y]\ [A=\%03.3b]\ [H=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-"set statusline=%{GitBranch()}
-
-" toggle paste mode
+" Toggle paste mode
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 
-map <leader>n :NERDTreeToggle<cr>
-map <leader>m :MRU<cr>
-
-" Tab mappings.
+" Tab mappings
 map <leader>tt :tabnew<cr>
 map <leader>te :tabedit
 map <leader>tc :tabclose<cr>
@@ -189,58 +157,37 @@ map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 
+" Save as root
 cmap w!! %!sudo tee > /dev/null %
 
-" disable flashing and beeping
-set noerrorbells visualbell t_vb=
-autocmd GUIEnter * set visualbell t_vb=
-
-set history=50
-set viminfo='20,\"50
-
-" scroll 3 lines with arrow keys
+" Scroll 3 lines with arrow keys
 noremap <down> 3<C-e>
 noremap <up> 3<C-y>
 
-set noautoindent smartindent
-"The rest deal with whitespace handling and
-"mainly make sure hardtabs are never entered
-set softtabstop=4
-set expandtab
-set shiftwidth=4
-set shiftround
-set nojoinspaces
+" Press <C-v> to paste with pastemode, <C-f> for old <C-v> functionality.
+inoremap <C-f> <C-v>
+inoremap <C-v> <ESC>"+p`]a
 
-"allow deleting selection without updating the clipboard (yank buffer)
+" Allow deleting selection without updating the yank buffer
 vnoremap x "_x
 vnoremap X "_X
 
+" Press <ESC> twice to unhilight
 map <ESC><ESC> :noh<CR>
 
-"nnoremap <Space> 10<C-d>
-"nnoremap <S-Space> 10<C-u>
+" Mapping to quickly change curly braces to C&R style
+map <leader>[] :%s/n[ \t\n]*{/ {/g<CR>
 
-map <leader>[] :%s/\n[ \t\n]*{/{/g<CR>
-
+" Save using :ww in addition to :w<cr>
 cmap ww w<cr>
 
-" swap colon and semicolon
+" Enter command-line mode without having to press the shift key
 nnoremap ; :
-" nnoremap : ;
-"
 vnoremap ; :
-" vnoremap : ;
 
+" Swap lines
 nnoremap <C-j> :m+<CR>==
 nnoremap <C-k> :m-2<CR>==
-nnoremap <C-h> <<
-nnoremap <C-l> >>
-inoremap <C-j> <Esc>:m+<CR>==gi
-inoremap <C-k> <Esc>:m-2<CR>==gi
-inoremap <C-h> <Esc><<`]a
-inoremap <C-l> <Esc>>>`]a
-vnoremap <C-j> :m'>+<CR>gv=gv
-vnoremap <C-k> :m-2<CR>gv=gv
 
 " Run Flake8
 autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
@@ -252,71 +199,234 @@ nmap <S-Space> <leader>ci
 " press <F9> to execute the current buffer with python
 nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
-autocmd BufWritePost *.coffee compiler cake
-autocmd BufWritePost *.coffee silent make! build-dev
-
-autocmd BufWritePost *.less compiler cake
-autocmd BufWritePost *.less silent make! build-css
-
-map j gj
-map k gk
-
+" Press F3 to output a timestamp
 nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-"set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
-"let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
-
-" CtrlP
-nnoremap <silent> <Space> :CtrlPBuffer<CR>
-
-set encoding=utf-8
-set t_Co=256
-set fillchars+=stl:\ ,stlnc:\
-set termencoding=utf-8
-
-let g:airline#extensions#tabline#enabled = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline_powerline_fonts = 1
-
-"let g:airline_left_sep='>'
-"let g:airline_right_sep='<'
-
+" Ctrl-C will unhighlight
 map <C-c> :noh<CR>
 
+" Emacs-like
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
+
+" Move between long lines
+map j gj
+map k gk
+
+
+" Commands
+" ================================================================================
+" Remap Caps Lock to ESC, Ctrl
+command! Mapesc :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+command! Mapctrl :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
+
+" Show invisible characters. e.g. tabs, end of line, trailing whitespaces
+let g:is_invisible_visible = 0
+function! ToggleShowInvisible()
+    if g:is_invisible_visible
+        set nolist listchars=eol:$
+    else
+        set list listchars=eol:$,tab:»·,trail:·,extends:>,precedes:<,nbsp:~
+    endif
+    let g:is_invisible_visible = !g:is_invisible_visible
+endfunction
+command! ToggleInvisible :call ToggleShowInvisible()
+
+
+" Generic, non-interactive config without plugin dependency
+" ================================================================================
+" Temp file paths
+" --------------------------------------------------------------------------------
+" Keep swap files in one location
+if !isdirectory("~/.vim/tmp/")
+    silent !mkdir ~/.vim/tmp/ > /dev/null 2>&1
+endif
+set directory=$HOME/.vim/tmp//,.  
+" .viminfo file location
+set viminfo='20,\"50
+set viminfo+=n~/.vim/tmp/.viminfo
+
+" Appearance
+" --------------------------------------------------------------------------------
+" Enable 256 colors
+set t_Co=256
+" OS, interface specific
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Bitstream\ Vera\ Sans\ Mono\ 9
+        "set guifont=Andale\ Mono\ 9\.5
+        "set guifont=Andale\ Mono\ 12
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    elseif system("uname") == "Darwin\n"
+        set guifont=Inconsolata\ for\ Powerline:h15
+    endif
+
+    "let g:zenburn_high_Contrast=1
+    "colorscheme zenburn
+
+    "colorscheme Tomorrow-Night
+
+    " Pencil Theme
+    colo pencil
+    let g:pencil_terminal_italics = 1
+    set background=light
+else
+    colorscheme Tomorrow-Night
+endif
+" Fill the statuslines
+set fillchars+=stl:\ ,stlnc:\
+" Minimalistic gvim interface
+set guioptions+=TmlrLRb
+set guioptions-=TmlrLRb
+
+
+" File names, types
+" --------------------------------------------------------------------------------
+autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
+autocmd Filetype tex setlocal ts=2 sts=2 sw=2 spell
+" Compile CoffeeScript and LESS on save
+autocmd BufWritePost *.coffee compiler cake
+autocmd BufWritePost *.coffee silent make! build-dev
+autocmd BufWritePost *.less compiler cake
+autocmd BufWritePost *.less silent make! build-css
+" Reload .vimrc on save
 autocmd! BufWritePost .vimrc source %
 
-let g:vim_markdown_folding_disabled = 1
 
+" Built-in, uncategorized
+" --------------------------------------------------------------------------------
+set wmh=0
+set modeline
+set encoding=utf-8
+set termencoding=utf-8
+set history=50
+let html_no_rendering=1
+filetype plugin on
+set foldlevel=99
+
+" Turn on syntax highlighting.
+syntax on
+
+set foldmethod=indent             " Lines with equal indent form a fold.
+set showcmd                       " Display incomplete commands.
+set showmode                      " Display the mode you're in.
+set backspace=indent,eol,start    " Intuitive backspacing.
+set hidden                        " Handle multiple buffers better.
+set wildmenu                      " Enhanced command line completion.
+set wildmode=list:longest         " Complete files like a shell.
+set ignorecase                    " Case-insensitive searching.
+set smartcase                     " But case-sensitive if expression contains a capital letter.
+set number                        " Show line numbers.
+set ruler                         " Show cursor position.
+set incsearch                     " Highlight matches as you type.
+set hlsearch                      " Highlight matches.
+set wrap                          " Turn on line wrapping.
+set scrolloff=3                   " Show 3 lines of context around the cursor.
+set title                         " Set the terminal's title
+set nobackup                      " Don't make a backup before overwriting a file.
+set nowritebackup                 " And again.
+set laststatus=2                  " Show the status line all the time
+
+" Disable flashing and beeping
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+" Indentation
+set noautoindent smartindent
+" Making sure hardtabs are never entered
+set softtabstop=4
+set expandtab
+set shiftwidth=4
+set shiftround
+set nojoinspaces
+
+
+" Non-interactive, plugin-specific
+" ================================================================================
+
+" Gist
+" --------------------------------------------------------------------------------
 let g:gist_post_private = 1
 
 
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+" Vim Markdown
+" --------------------------------------------------------------------------------
+let g:vim_markdown_folding_disabled = 1
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
 
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
+" Airline
+" --------------------------------------------------------------------------------
+let g:airline#extensions#tabline#enabled = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
 endif
+let g:airline_powerline_fonts = 1
+"let g:airline_left_sep='>'
+"let g:airline_right_sep='<'
 
-" automatic paste mode
-imap <D-v> ^O"+p
-inoremap <C-v> <ESC>"+p`]a
+
+" YouCompleteMe
+" --------------------------------------------------------------------------------
+"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"Do not ask when starting vim
+let g:ycm_confirm_extra_conf = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+set tags+=./.tags
+
+
+" SirVer/ultisnips
+" --------------------------------------------------------------------------------
+" Trigger configuration. Do not use <tab> if you use /Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-h>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+" Vim-LaTeX
+" --------------------------------------------------------------------------------
+let Tex_FoldedSections=""
+let Tex_FoldedEnvironments=""
+let Tex_FoldedMisc=""
+let g:Tex_GotoError=0
+
+" Compiling and synctex support
+let g:Tex_DefaultTargetFormat = 'pdf'
+
+let g:Tex_CompileRule_dvi = 'latex --interaction=nonstopmode $*'
+let g:Tex_CompileRule_ps = 'dvips -Pwww -o $*.ps $*.dvi'
+let g:Tex_CompileRule_pspdf = 'ps2pdf $*.ps'
+let g:Tex_CompileRule_dvipdf = 'dvipdfm $*.dvi'
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
+
+let g:Tex_ViewRule_dvi = 'texniscope'
+let g:Tex_ViewRule_ps = 'Preview'
+let g:Tex_ViewRule_pdf = 'Skim'
+
+let g:Tex_FormatDependency_ps  = 'dvi,ps'
+let g:Tex_FormatDependency_pspdf = 'dvi,ps,pspdf'
+let g:Tex_FormatDependency_dvipdf = 'dvi,dvipdf'
+
+" let g:Tex_IgnoredWarnings ='
+"       \"Underfull\n".
+"       \"Overfull\n".
+"       \"specifier changed to\n".
+"       \"You have requested\n".
+"       \"Missing number, treated as zero.\n".
+"       \"There were undefined references\n".
+"       \"Citation %.%# undefined\n".
+"       \"\oval, \circle, or \line size unavailable\n"'
+
+
+" vim-pencil
+" --------------------------------------------------------------------------------
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
