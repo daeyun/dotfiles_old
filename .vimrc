@@ -32,7 +32,6 @@ Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'mattn/emmet-vim'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'nvie/vim-flake8'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-notes'
 Plugin 'groenewege/vim-less'
@@ -54,6 +53,11 @@ Plugin 'Shougo/neosnippet-snippets'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'reedes/vim-pencil'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'klen/python-mode'
+Plugin 'reedes/vim-litecorrect'
 
 " Plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
@@ -214,6 +218,10 @@ inoremap <C-a> <C-o>0
 map j gj
 map k gk
 
+if has("gui_running")
+    inoremap <c-h> <c-g>u<Esc>[s1z=`]A<c-g>u
+    nnoremap <c-h> [s1z=<c-o>
+endif
 
 " Commands
 " ================================================================================
@@ -272,6 +280,7 @@ if has("gui_running")
     colo pencil
     let g:pencil_terminal_italics = 1
     set background=light
+    let g:airline_theme = 'pencil'
 else
     colorscheme Tomorrow-Night
 endif
@@ -425,8 +434,42 @@ let g:Tex_FormatDependency_dvipdf = 'dvi,dvipdf'
 
 " vim-pencil
 " --------------------------------------------------------------------------------
+let g:pencil#wrapModeDefault = 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType text         call pencil#init()
+  autocmd FileType markdown,mkd call pencil#init() |
+                              \ call litecorrect#init() |
+                              \ setl spell spl=en_us fdl=4 noru nonu nornu |
+                              \ setl fdo+=search
+  autocmd Filetype git,gitsendemail,*commit*,*COMMIT* |
+                              \ call pencil#init({'wrap': 'hard', 'textwidth': 72}) |
+                              \ call litecorrect#init() |
+                              \ setl spell spl=en_us et sw=2 ts=2 noai
+  autocmd Filetype mail         call pencil#init({'wrap': 'hard', 'textwidth': 60}) |
+                              \ call litecorrect#init() |
+                              \ setl spell spl=en_us et sw=2 ts=2 noai nonu nornu
+  autocmd Filetype html,xml     call pencil#init({'wrap': 'soft'}) |
+                              \ call litecorrect#init() |
+                              \ setl spell spl=en_us et sw=2 ts=2
 augroup END
+
+
+" easymotion
+" --------------------------------------------------------------------------------
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Bi-directional find motion
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap s <Plug>(easymotion-s)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-s2)
+
+" Turn on case sensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
