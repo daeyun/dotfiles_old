@@ -4,7 +4,7 @@
 "
 "   Daeyun Shin (daeyun@daeyunshin.com)
 "   Created         Aug 01, 2011
-"   Last modified   Nov 22, 2014
+"   Last modified   Nov 23, 2014
 "
 "================================================
 
@@ -179,7 +179,7 @@ vnoremap X "_X
 " Press <ESC> twice to unhilight
 map <ESC><ESC> :noh<CR>
 
-" Mapping to quickly change curly braces to C&R style
+" Mapping to quickly change curly braces to K&R style
 map <leader>[] :%s/n[ \t\n]*{/ {/g<CR>
 
 " Save using :ww in addition to :w<cr>
