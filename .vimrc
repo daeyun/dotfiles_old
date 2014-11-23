@@ -9,7 +9,7 @@
 "================================================
 
 " Plugin manager
-" ================================================================================
+"================================================================================
 set nocompatible               " be iMproved
 filetype off                   " required!
 
@@ -71,9 +71,9 @@ filetype plugin indent on    " required
 
 
 " Plugin-dependent key bindings
-" ================================================================================
+"================================================================================
 " CtrlP
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 nnoremap <silent> <Space> :CtrlPBuffer<CR>
 " Specify an external tool for listing files
 let g:ctrlp_user_command = 'find %s -type f'
@@ -88,13 +88,13 @@ let g:ctrlp_custom_ignore = {
 
 
 " YouCompleteMe
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
 
 " Neosnippet
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -110,17 +110,17 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 
 " NERD Tree
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 map <leader>n :NERDTreeToggle<cr>
 
 
 " MRU
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 map <leader>m :MRU<cr>
 
 
-" Key bindings based on build-in features
-" ================================================================================
+" Key bindings based on built-in features
+"================================================================================
 " Easier window navigation
 map <m-j> <c-w>j
 map <m-k> <c-w>k
@@ -224,7 +224,7 @@ if has("gui_running")
 endif
 
 " Commands
-" ================================================================================
+"================================================================================
 " Remap Caps Lock to ESC, Ctrl
 command! Mapesc :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 command! Mapctrl :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
@@ -243,9 +243,9 @@ command! ToggleInvisible :call ToggleShowInvisible()
 
 
 " Generic, non-interactive config without plugin dependency
-" ================================================================================
+"================================================================================
 " Temp file paths
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 " Keep swap files in one location
 if !isdirectory("~/.vim/tmp/")
     silent !mkdir ~/.vim/tmp/ > /dev/null 2>&1
@@ -256,7 +256,7 @@ set viminfo='20,\"50
 set viminfo+=n~/.vim/tmp/.viminfo
 
 " Appearance
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 " Enable 256 colors
 set t_Co=256
 " OS, interface specific
@@ -292,7 +292,7 @@ set guioptions-=TmlrLRb
 
 
 " File names, types
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
@@ -307,7 +307,7 @@ autocmd! BufWritePost .vimrc source %
 
 
 " Built-in, uncategorized
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 set wmh=0
 set modeline
 set encoding=utf-8
@@ -354,20 +354,20 @@ set nojoinspaces
 
 
 " Non-interactive, plugin-specific
-" ================================================================================
+"================================================================================
 
 " Gist
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 let g:gist_post_private = 1
 
 
 " Vim Markdown
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 let g:vim_markdown_folding_disabled = 1
 
 
 " Airline
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 let g:airline#extensions#tabline#enabled = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -378,7 +378,7 @@ let g:airline_powerline_fonts = 1
 
 
 " YouCompleteMe
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "Do not ask when starting vim
 let g:ycm_confirm_extra_conf = 0
@@ -388,7 +388,7 @@ set tags+=./.tags
 
 
 " SirVer/ultisnips
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 " Trigger configuration. Do not use <tab> if you use /Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-h>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -398,7 +398,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 
 " Vim-LaTeX
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 let Tex_FoldedSections=""
 let Tex_FoldedEnvironments=""
 let Tex_FoldedMisc=""
@@ -433,7 +433,7 @@ let g:Tex_FormatDependency_dvipdf = 'dvi,dvipdf'
 
 
 " vim-pencil
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 let g:pencil#wrapModeDefault = 'hard'
 augroup pencil
   autocmd!
@@ -455,7 +455,7 @@ augroup END
 
 
 " easymotion
-" --------------------------------------------------------------------------------
+"--------------------------------------------------------------------------------
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Bi-directional find motion
