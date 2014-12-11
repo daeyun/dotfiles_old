@@ -297,6 +297,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
 autocmd Filetype tex setlocal ts=2 sts=2 sw=2 spell
+autocmd Filetype matlab setlocal autoread
 " Compile CoffeeScript and LESS on save
 autocmd BufWritePost *.coffee compiler cake
 autocmd BufWritePost *.coffee silent make! build-dev
@@ -304,6 +305,24 @@ autocmd BufWritePost *.less compiler cake
 autocmd BufWritePost *.less silent make! build-css
 " Reload .vimrc on save
 autocmd! BufWritePost .vimrc source %
+" Encrypted file config
+autocmd BufReadPre * if system("head -c 9 " . expand("<afile>")) == "VimCrypt~" | call SetupEncryption() | endif
+function! SetupEncryption()
+    " disable the swap file
+    setlocal noswapfile
+    " disable viminfo (global)
+    set viminfo=
+    " auto-close folds
+    setlocal foldlevel=0
+    setlocal foldclose=all
+    " make it harder to open folds by accident
+    setlocal foldopen=""
+    " move cursor over word and press 'e' to obfuscate/unobfuscate it
+    noremap <buffer> e g?iw
+
+    setlocal foldexpr=getline(v\:lnum)=~'^\\s\\|^$'
+    setlocal nobackup nonumber bufhidden=wipe
+endfunction
 
 
 " Built-in, uncategorized
@@ -316,6 +335,9 @@ set history=50
 let html_no_rendering=1
 filetype plugin on
 set foldlevel=99
+
+" Encryption method. Requires version 7.4.399 or higher
+setlocal cm=blowfish
 
 " Turn on syntax highlighting.
 syntax on
@@ -434,7 +456,7 @@ let g:Tex_FormatDependency_dvipdf = 'dvi,dvipdf'
 
 " vim-pencil
 "--------------------------------------------------------------------------------
-let g:pencil#wrapModeDefault = 'hard'
+let g:pencil#wrapModeDefault = 'soft'
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd call pencil#init() |
