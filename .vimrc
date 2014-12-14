@@ -4,7 +4,7 @@
 "
 "   Daeyun Shin (daeyun@daeyunshin.com)
 "   Created         Aug 01, 2011
-"   Last modified   Nov 23, 2014
+"   Last modified   Dec 14, 2014
 "
 "================================================
 
@@ -58,6 +58,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'klen/python-mode'
 Plugin 'reedes/vim-litecorrect'
+Plugin 'dhruvasagar/vim-table-mode'
 
 " Plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
@@ -82,7 +83,7 @@ let g:ctrlp_user_command = 'find %s -type f'
 " Ignore those files
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-    \ 'file': '\v\.(exe|so|dll)$',
+    \ 'file': '\v\.(exe|so|dll|swp|~|DS_Store)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
 
@@ -221,6 +222,9 @@ map k gk
 if has("gui_running")
     inoremap <c-h> <c-g>u<Esc>[s1z=`]A<c-g>u
     nnoremap <c-h> [s1z=<c-o>
+else
+    " Y in visual mode will copy to clipboard
+    vnoremap Y "*y
 endif
 
 " Commands
@@ -271,6 +275,10 @@ if has("gui_running")
         set guifont=Inconsolata\ for\ Powerline:h15
     endif
 
+    " Minimalistic gvim interface
+    set guioptions+=TmlrLRb
+    set guioptions-=TmlrLRb
+
     "let g:zenburn_high_Contrast=1
     "colorscheme zenburn
 
@@ -281,18 +289,19 @@ if has("gui_running")
     let g:pencil_terminal_italics = 1
     set background=light
     let g:airline_theme = 'pencil'
+
 else
     colorscheme Tomorrow-Night
 endif
 " Fill the statuslines
 set fillchars+=stl:\ ,stlnc:\
-" Minimalistic gvim interface
-set guioptions+=TmlrLRb
-set guioptions-=TmlrLRb
 
 
 " File names, types
 "--------------------------------------------------------------------------------
+" This prevents having the autocommands defined twice (e.g., after sourcing the .vimrc file again).
+autocmd!
+
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
@@ -303,8 +312,10 @@ autocmd BufWritePost *.coffee compiler cake
 autocmd BufWritePost *.coffee silent make! build-dev
 autocmd BufWritePost *.less compiler cake
 autocmd BufWritePost *.less silent make! build-css
+" Default filetype is txt
+autocmd BufEnter * if &filetype == "" | setlocal ft=txt | endif
 " Reload .vimrc on save
-autocmd! BufWritePost .vimrc source %
+autocmd BufWritePost .vimrc source %
 " Encrypted file config
 autocmd BufReadPre * if system("head -c 9 " . expand("<afile>")) == "VimCrypt~" | call SetupEncryption() | endif
 function! SetupEncryption()
@@ -336,7 +347,7 @@ let html_no_rendering=1
 filetype plugin on
 set foldlevel=99
 
-" Encryption method. Requires version 7.4.399 or higher
+" Encryption method
 setlocal cm=blowfish
 
 " Turn on syntax highlighting.
