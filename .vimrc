@@ -474,10 +474,6 @@ augroup pencil
                               \ call litecorrect#init() |
                               \ setl spell spl=en_us fdl=4 noru nonu nornu |
                               \ setl fdo+=search
-  autocmd Filetype git,gitsendemail,*commit*,*COMMIT* |
-                              \ call pencil#init({'wrap': 'hard', 'textwidth': 72}) |
-                              \ call litecorrect#init() |
-                              \ setl spell spl=en_us et sw=2 ts=2 noai
   autocmd Filetype mail         call pencil#init({'wrap': 'hard', 'textwidth': 60}) |
                               \ call litecorrect#init() |
                               \ setl spell spl=en_us et sw=2 ts=2 noai nonu nornu
