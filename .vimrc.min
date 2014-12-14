@@ -1,0 +1,327 @@
+"========================================================
+"
+"   .vimrc.min - a lightweight fork of my .vimrc
+"
+"   Daeyun Shin (daeyun@daeyunshin.com)
+"   Created         Dec 13, 2014
+"   Last modified   Dec 14, 2014
+"
+"========================================================
+
+set nocompatible               " be iMproved
+
+" Key bindings based on built-in features
+"================================================================================
+" Easier window navigation
+map <m-j> <c-w>j
+map <m-k> <c-w>k
+map <m-l> <c-w>l
+map <m-h> <c-w>h
+
+" Window resizing
+map <m-m> <C-w>3+
+map <m-n> <C-w>3-
+map <C-n> <C-W>3<
+map <C-m> <C-W>3>
+
+" Moving windows
+map <m-K> <C-w>K
+map <m-J> <C-w>J
+map <m-H> <C-w>H
+map <m-L> <C-w>L
+map <m-R> <C-w>R
+map <m-r> <C-w>r
+
+" Press left and right arrow keys to switch buffers
+nnoremap <silent> <right> :bn<CR>
+nnoremap <silent> <left> :bp<CR>
+
+" Toggle paste mode
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
+" Tab mappings
+map <leader>tt :tabnew<cr>
+map <leader>te :tabedit
+map <leader>tc :tabclose<cr>
+map <leader>to :tabonly<cr>
+map <leader>tn :tabnext<cr>
+map <leader>tp :tabprevious<cr>
+map <leader>tf :tabfirst<cr>
+map <leader>tl :tablast<cr>
+map <leader>tm :tabmove
+
+" Save as root
+cmap w!! %!sudo tee > /dev/null %
+
+" Scroll 3 lines with arrow keys
+noremap <down> 3<C-e>
+noremap <up> 3<C-y>
+
+" Press <C-v> to paste with pastemode, <C-f> for old <C-v> functionality.
+inoremap <C-f> <C-v>
+inoremap <C-v> <ESC>"+p`]a
+
+" Allow deleting selection without updating the yank buffer
+vnoremap x "_x
+vnoremap X "_X
+
+" Press <ESC> twice to unhilight
+map <ESC><ESC> :noh<CR>
+
+" Mapping to quickly change curly braces to K&R style
+map <leader>[] :%s/n[ \t\n]*{/ {/g<CR>
+
+" Save using :ww in addition to :w<cr>
+cmap ww w<cr>
+
+" Enter command-line mode without having to press the shift key
+nnoremap ; :
+vnoremap ; :
+
+" Swap lines
+nnoremap <C-j> :m+<CR>==
+nnoremap <C-k> :m-2<CR>==
+
+" Run Flake8
+autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
+
+" Toggle comments
+vmap <Space> <leader>ci
+nmap <S-Space> <leader>ci
+
+" press <F9> to execute the current buffer with python
+nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+
+" Press F3 to output a timestamp
+nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+
+" Ctrl-C will unhighlight
+map <C-c> :noh<CR>
+
+" Emacs-like
+inoremap <C-e> <C-o>$
+inoremap <C-a> <C-o>0
+
+" Move between long lines
+map j gj
+map k gk
+
+if has("gui_running")
+    inoremap <c-h> <c-g>u<Esc>[s1z=`]A<c-g>u
+    nnoremap <c-h> [s1z=<c-o>
+else
+    " Y in visual mode will copy to clipboard
+    vnoremap Y "*y
+endif
+
+" Reformat current paragraph
+noremap Q call Preserve("normal gqap")<CR>
+
+" Commands
+"================================================================================
+" Remap Caps Lock to ESC, Ctrl
+command! Mapesc :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+command! Mapctrl :!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
+
+" Show invisible characters. e.g. tabs, end of line, trailing whitespaces
+let g:is_invisible_visible = 0
+function! ToggleShowInvisible()
+    if g:is_invisible_visible
+        set nolist listchars=eol:$
+    else
+        set list listchars=eol:$,tab:»·,trail:·,extends:>,precedes:<,nbsp:~
+    endif
+    let g:is_invisible_visible = !g:is_invisible_visible
+endfunction
+command! ToggleInvisible :call ToggleShowInvisible()
+
+" Soft-wrap hard-wrapped text and disable auto formatting
+command! -range=% SoftWrap
+            \ setlocal formatoptions-=a |
+            \ <line2>put _ |
+            \ <line1>,<line2>g/.\+/ .;-/^$/ join | normal $x
+
+
+" Generic, non-interactive config without plugin dependency
+"================================================================================
+" Temp file paths
+"--------------------------------------------------------------------------------
+" Keep swap files in one location
+if !isdirectory("~/.vim/tmp/")
+    silent !mkdir ~/.vim/tmp/ > /dev/null 2>&1
+endif
+set directory=$HOME/.vim/tmp//,.  
+" .viminfo file location
+set viminfo='20,\"50
+set viminfo+=n~/.vim/tmp/.viminfo
+
+" Appearance
+"--------------------------------------------------------------------------------
+" Enable 256 colors
+set t_Co=256
+" OS, interface specific
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Bitstream\ Vera\ Sans\ Mono\ 9
+        "set guifont=Andale\ Mono\ 9\.5
+        "set guifont=Andale\ Mono\ 12
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    elseif system("uname") == "Darwin\n"
+        set guifont=Inconsolata\ for\ Powerline:h15
+    endif
+
+    colorscheme topfunky-light
+
+    set lines=20 columns=80
+
+    " Minimalistic gvim interface
+    set guioptions+=TmlrLRb
+    set guioptions-=TmlrLRb
+else
+    colorscheme wombat256mod
+endif
+" Fill the statuslines
+set fillchars+=stl:\ ,stlnc:\
+
+
+" Autocommands
+"--------------------------------------------------------------------------------
+" This prevents having the autocommands defined twice (e.g., after sourcing the .vimrc file again).
+autocmd!
+
+autocmd FileType gitcommit setlocal spell tw=72
+autocmd FileType ruby setlocal ts=2 sts=2 sw=2
+autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=200
+autocmd FileType tex setlocal ts=2 sts=2 sw=2 spell
+autocmd FileType matlab setlocal autoread
+autocmd FileType txt setlocal nu! spell tw=74 wm=1 formatoptions+=a
+" Compile CoffeeScript and LESS on save
+autocmd BufWritePost *.coffee compiler cake
+autocmd BufWritePost *.coffee silent make! build-dev
+autocmd BufWritePost *.less compiler cake
+autocmd BufWritePost *.less silent make! build-css
+" Default filetype is txt
+autocmd BufEnter * if &filetype == "" | setlocal ft=txt | endif
+" Reload .vimrc on save
+autocmd BufWritePost .vimrc source %
+" Encrypted file config
+autocmd BufReadPre * if system("head -c 9 " . expand("<afile>")) == "VimCrypt~" | call SetupEncryption() | endif
+function! SetupEncryption()
+    " disable the swap file
+    setlocal noswapfile
+    " disable viminfo (global)
+    set viminfo=
+    " auto-close folds
+    setlocal foldlevel=0
+    setlocal foldclose=all
+    " make it harder to open folds by accident
+    setlocal foldopen=""
+    " move cursor over word and press 'e' to obfuscate/unobfuscate it
+    noremap <buffer> e g?iw
+
+    setlocal foldexpr=getline(v\:lnum)=~'^\\s\\|^$'
+    setlocal nobackup nonumber bufhidden=wipe
+endfunction
+
+" Convert hard-wraps to soft-wraps on save for vim-anywhere buffers
+let b:is_softwrap_active=0
+autocmd BufWritePre **/vim-anywhere/doc-* :call SoftWrapTxt()
+autocmd BufWritePost **/vim-anywhere/doc-* if b:is_softwrap_active | :call SoftWrapTxt(1) | endif
+function! SoftWrapTxt(...)
+    let l:is_undo_mode = a:0 > 0 ? a:1 : 0
+
+    if &filetype=='txt'
+        if !l:is_undo_mode && !b:is_softwrap_active
+            let b:is_softwrap_active=1
+            let b:cursor_backup = getpos(".")
+            SoftWrap
+        elseif l:is_undo_mode && b:is_softwrap_active
+            let b:is_softwrap_active=0
+            silent undo
+            setlocal formatoptions+=a
+            call setpos('.', b:cursor_backup)
+        endif
+    endif
+endfunction
+
+
+" Built-in, uncategorized
+"--------------------------------------------------------------------------------
+set wmh=0
+set modeline
+set encoding=utf-8
+set termencoding=utf-8
+set history=50
+let html_no_rendering=1
+filetype plugin on
+set foldlevel=99
+
+" Encryption method
+setlocal cm=blowfish
+
+" Turn on syntax highlighting.
+syntax on
+
+set foldmethod=indent             " Lines with equal indent form a fold.
+set showcmd                       " Display incomplete commands.
+set showmode                      " Display the mode you're in.
+set backspace=indent,eol,start    " Intuitive backspacing.
+set hidden                        " Handle multiple buffers better.
+set wildmenu                      " Enhanced command line completion.
+set wildmode=list:longest         " Complete files like a shell.
+set ignorecase                    " Case-insensitive searching.
+set smartcase                     " But case-sensitive if expression contains a capital letter.
+set number                        " Show line numbers.
+set ruler                         " Show cursor position.
+set incsearch                     " Highlight matches as you type.
+set hlsearch                      " Highlight matches.
+set wrap                          " Turn on line wrapping.
+set scrolloff=3                   " Show 3 lines of context around the cursor.
+set title                         " Set the terminal's title
+set nobackup                      " Don't make a backup before overwriting a file.
+set nowritebackup                 " And again.
+set laststatus=2                  " Show the status line all the time
+
+" Disable flashing and beeping
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+" Indentation
+set noautoindent smartindent
+" Making sure hardtabs are never entered
+set softtabstop=4
+set expandtab
+set shiftwidth=4
+set shiftround
+set nojoinspaces
+" Start vim in insert mode
+startinsert
+
+" Helper functions
+"--------------------------------------------------------------------------------
+" A wrapper function to restore the cursor position, window position,
+" and last search after running a command.
+function! Preserve(command)
+  " Save the last search
+  let last_search=@/
+  " Save the current cursor position
+  let save_cursor = getpos(".")
+  " Save the window position
+  normal H
+  let save_window = getpos(".")
+  call setpos('.', save_cursor)
+ 
+  " Do the business:
+  execute a:command
+ 
+  " Restore the last_search
+  let @/=last_search
+  " Restore the window position
+  call setpos('.', save_window)
+  normal zt
+  " Restore the cursor position
+  call setpos('.', save_cursor)
+endfunction
