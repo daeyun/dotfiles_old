@@ -38,6 +38,7 @@ Clone this repository and symlink dotfiles
 cd ~
 git clone git@github.com:daeyun/dotfiles.git
 ln -nsf ~/dotfiles/.vim* .
+echo 'alias vimm="vim -u ~/.vimrc.min"' >> ~/.zshrc
 ```
 
 Set up Vundle
