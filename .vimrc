@@ -72,6 +72,8 @@ Plugin 'daeyun/vim-latex'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+" This prevents having the autocommands defined twice (e.g., after sourcing the .vimrc file again).
+autocmd!
 
 " Plugin-dependent key bindings
 "================================================================================
@@ -325,9 +327,6 @@ set fillchars+=stl:\ ,stlnc:\
 
 " File names, types
 "--------------------------------------------------------------------------------
-" This prevents having the autocommands defined twice (e.g., after sourcing the .vimrc file again).
-autocmd!
-
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
