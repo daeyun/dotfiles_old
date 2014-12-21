@@ -59,6 +59,8 @@ Plugin 'tpope/vim-repeat'
 Plugin 'klen/python-mode'
 Plugin 'reedes/vim-litecorrect'
 Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'danro/rename.vim'
+Plugin 'rhysd/vim-clang-format'
 
 " Plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
@@ -87,6 +89,20 @@ let g:ctrlp_custom_ignore = {
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
 
+" Pressing <c-@> in Buffer mode will delete the selected buffer
+let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
+func! MyCtrlPMappings()
+    nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
+endfunc
+func! s:DeleteBuffer()
+    let line = getline('.')
+    let bufid = line =~ '\[\d\+\*No Name\]$' ? str2nr(matchstr(line, '\d\+'))
+        \ : fnamemodify(line[2:], ':p')
+    exec "bd" bufid
+    exec "norm \<F5>"
+endfunc
+
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
 " YouCompleteMe
 "--------------------------------------------------------------------------------
@@ -119,6 +135,16 @@ map <leader>n :NERDTreeToggle<cr>
 "--------------------------------------------------------------------------------
 map <leader>m :MRU<cr>
 
+
+" clang-format
+"--------------------------------------------------------------------------------
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+autocmd FileType c,cpp,objc nmap <Leader>C :ClangFormatAutoToggle<CR>
 
 " Key bindings based on built-in features
 "================================================================================
@@ -307,11 +333,6 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
 autocmd Filetype tex setlocal ts=2 sts=2 sw=2 spell
 autocmd Filetype matlab setlocal autoread
-" Compile CoffeeScript and LESS on save
-autocmd BufWritePost *.coffee compiler cake
-autocmd BufWritePost *.coffee silent make! build-dev
-autocmd BufWritePost *.less compiler cake
-autocmd BufWritePost *.less silent make! build-css
 " Default filetype is txt
 autocmd BufEnter * if &filetype == "" | setlocal ft=txt | endif
 " Reload .vimrc on save
