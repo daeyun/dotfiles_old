@@ -7,6 +7,24 @@ my dotfiles.
 
 ### Vim
 
+#### Dependencies
+
+##### clang-format
+
+Download from [http://llvm.org/releases/download.html](http://llvm.org/releases/download.html)
+
+```
+wget http://llvm.org/releases/3.5.0/clang+llvm-3.5.0-macosx-apple-darwin.tar.xz
+tar -xJf clang+llvm-3.5.0-macosx-apple-darwin.tar.xz
+mkdir -p ~/usr/bin/ && cp clang+llvm-3.5.0-macosx-apple-darwin/bin/clang-format "$_"
+```
+
+Add `~/usr/bin` to PATH
+
+```
+echo 'export PATH=$HOME/usr/bin:$PATH' >> ~/.zshrc
+```
+
 #### Build Vim
 
 Clone Vim
