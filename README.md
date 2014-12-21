@@ -21,9 +21,13 @@ mkdir -p ~/usr/bin/ && cp clang+llvm-3.5.0-macosx-apple-darwin/bin/clang-format 
 
 Add `~/usr/bin` to PATH
 
+MacVim reads the PATH variable in `~/.zprofile` instead of `~/.zshrc`
+
+
 ```
-echo 'export PATH=$HOME/usr/bin:$PATH' >> ~/.zshrc
+echo 'export PATH=$HOME/usr/bin:$PATH' >> ~/.zprofile
 ```
+
 
 #### Build Vim
 
