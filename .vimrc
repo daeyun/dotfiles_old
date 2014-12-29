@@ -105,7 +105,9 @@ func! s:DeleteBuffer()
 endfunc
 
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-
+" fzf fuzzy finder
+"--------------------------------------------------------------------------------
+set rtp+=~/.fzf
 " YouCompleteMe
 "--------------------------------------------------------------------------------
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -255,6 +257,9 @@ else
     vnoremap Y "*y
 endif
 
+" Be able to undo Ctrl-U in insert mode
+inoremap <c-u> <c-g>u<c-u>
+
 " Commands
 "================================================================================
 " Remap Caps Lock to ESC, Ctrl
@@ -324,6 +329,10 @@ endif
 " Fill the statuslines
 set fillchars+=stl:\ ,stlnc:\
 
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^linux'
+  set t_Co=16
+endif
 
 " File names, types
 "--------------------------------------------------------------------------------
@@ -331,7 +340,6 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
 autocmd Filetype tex setlocal ts=2 sts=2 sw=2 spell
-autocmd Filetype matlab setlocal autoread
 " Default filetype is txt
 autocmd BufEnter * if &filetype == "" | setlocal ft=txt | endif
 " Reload .vimrc on save
@@ -354,6 +362,19 @@ function! SetupEncryption()
     setlocal foldexpr=getline(v\:lnum)=~'^\\s\\|^$'
     setlocal nobackup nonumber bufhidden=wipe
 endfunction
+" Create parent directries on save
+function! s:MkNonExDir(file, buf)
+    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+        let dir=fnamemodify(a:file, ':h')
+        if !isdirectory(dir)
+            call mkdir(dir, 'p')
+        endif
+    endif
+endfunction
+augroup BWCCreateDir
+    autocmd!
+    autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
 
 
 " Built-in, uncategorized
@@ -362,7 +383,7 @@ set wmh=0
 set modeline
 set encoding=utf-8
 set termencoding=utf-8
-set history=50
+set history=1000
 let html_no_rendering=1
 filetype plugin on
 set foldlevel=99
@@ -387,7 +408,8 @@ set ruler                         " Show cursor position.
 set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
 set wrap                          " Turn on line wrapping.
-set scrolloff=3                   " Show 3 lines of context around the cursor.
+set scrolloff=2                   " Show 2 lines of context around the cursor.
+set sidescrolloff=5               " Show 5 characters of horizontal context around the cursor.
 set title                         " Set the terminal's title
 set nobackup                      " Don't make a backup before overwriting a file.
 set nowritebackup                 " And again.
@@ -404,7 +426,18 @@ set expandtab
 set shiftwidth=4
 set shiftround
 set nojoinspaces
-
+" Delete comment character when joining commented lines
+if v:version > 703 || v:version == 703 && has("patch541")
+    set formatoptions+=j
+endif
+" Turn off CTRL-A and CTRL-X commands using base 8 for numbers starting with a zero.
+set nrformats-=octal
+" Timeout when part of a mapped key sequence or keyboard code has been received.
+set ttimeout timeoutlen=200 ttimeoutlen=100
+" When a file has been detected to have been changed outside of Vim and it has
+" not been changed inside of Vim, automatically read it again.
+set autoread
+set smarttab
 
 " Non-interactive, plugin-specific
 "================================================================================
