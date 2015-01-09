@@ -25,46 +25,35 @@ Plugin 'gmarik/Vundle.vim'
 
 " Original repos on github
 Plugin 'tpope/vim-fugitive'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'tpope/vim-rails.git'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'mattn/emmet-vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
 Plugin 'groenewege/vim-less'
 Plugin 'ingydotnet/yaml-vim'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'kien/ctrlp.vim'
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'lazywei/vim-matlab'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 Plugin 'reedes/vim-pencil'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'klen/python-mode'
 Plugin 'reedes/vim-litecorrect'
-Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'danro/rename.vim'
 Plugin 'rhysd/vim-clang-format'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'tikhomirov/vim-glsl'
+Plugin 'mkitt/tabline.vim'
 
 " Plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
 Plugin 'mru.vim'
+Plugin 'DoxygenToolkit.vim'
+Plugin 'bufkill.vim'
 
 " Forked repos
 Plugin 'daeyun/vim-latex'
@@ -114,22 +103,6 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 
 
-" Neosnippet
-"--------------------------------------------------------------------------------
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-
 " NERD Tree
 "--------------------------------------------------------------------------------
 map <leader>n :NERDTreeToggle<cr>
@@ -150,115 +123,6 @@ autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
 autocmd FileType c,cpp,objc nmap <Leader>C :ClangFormatAutoToggle<CR>
 
-" Key bindings based on built-in features
-"================================================================================
-" Easier window navigation
-map <m-j> <c-w>j
-map <m-k> <c-w>k
-map <m-l> <c-w>l
-map <m-h> <c-w>h
-
-" Window resizing
-map <m-m> <C-w>3+
-map <m-n> <C-w>3-
-map <C-n> <C-W>3<
-map <C-m> <C-W>3>
-
-" Moving windows
-map <m-K> <C-w>K
-map <m-J> <C-w>J
-map <m-H> <C-w>H
-map <m-L> <C-w>L
-map <m-R> <C-w>R
-map <m-r> <C-w>r
-
-" Press left and right arrow keys to switch buffers
-nnoremap <silent> <right> :bn<CR>
-nnoremap <silent> <left> :bp<CR>
-
-" Toggle paste mode
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
-set showmode
-
-" Tab mappings
-map <leader>tt :tabnew<cr>
-map <leader>te :tabedit
-map <leader>tc :tabclose<cr>
-map <leader>to :tabonly<cr>
-map <leader>tn :tabnext<cr>
-map <leader>tp :tabprevious<cr>
-map <leader>tf :tabfirst<cr>
-map <leader>tl :tablast<cr>
-map <leader>tm :tabmove
-
-" Save as root
-cmap w!! %!sudo tee > /dev/null %
-
-" Scroll 3 lines with arrow keys
-noremap <down> 3<C-e>
-noremap <up> 3<C-y>
-
-" Press <C-v> to paste with pastemode, <C-f> for old <C-v> functionality.
-inoremap <C-f> <C-v>
-inoremap <C-v> <ESC>"+p`]a
-
-" Allow deleting selection without updating the yank buffer
-vnoremap x "_x
-vnoremap X "_X
-
-" Press <ESC> twice to unhilight
-map <ESC><ESC> :noh<CR>
-
-" Mapping to quickly change curly braces to K&R style
-map <leader>[] :%s/n[ \t\n]*{/ {/g<CR>
-
-" Save using :ww in addition to :w<cr>
-cmap ww w<cr>
-
-" Enter command-line mode without having to press the shift key
-nnoremap ; :
-vnoremap ; :
-
-" Swap lines
-nnoremap <C-j> :m+<CR>==
-nnoremap <C-k> :m-2<CR>==
-
-" Run Flake8
-autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
-
-" Toggle comments
-vmap <Space> <leader>ci
-nmap <S-Space> <leader>ci
-
-" press <F9> to execute the current buffer with python
-nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
-
-" Press F3 to output a timestamp
-nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
-imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
-
-" Ctrl-C will unhighlight
-map <C-c> :noh<CR>
-
-" Emacs-like
-inoremap <C-e> <C-o>$
-inoremap <C-a> <C-o>0
-
-" Move between long lines
-map j gj
-map k gk
-
-if has("gui_running")
-    inoremap <c-h> <c-g>u<Esc>[s1z=`]A<c-g>u
-    nnoremap <c-h> [s1z=<c-o>
-else
-    " Y in visual mode will copy to clipboard
-    vnoremap Y "*y
-endif
-
-" Be able to undo Ctrl-U in insert mode
-inoremap <c-u> <c-g>u<c-u>
 
 " Commands
 "================================================================================
@@ -324,7 +188,8 @@ if has("gui_running")
     let g:airline_theme = 'pencil'
 
 else
-    colorscheme Tomorrow-Night
+    colo molokai
+    let g:airline_theme = 'molokai'
 endif
 " Fill the statuslines
 set fillchars+=stl:\ ,stlnc:\
@@ -340,6 +205,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype ocaml setlocal ts=2 sts=2 sw=2 tw=200
 autocmd Filetype tex setlocal ts=2 sts=2 sw=2 spell
+autocmd Filetype cpp setlocal ts=2 sts=2 sw=2
 " Default filetype is txt
 autocmd BufEnter * if &filetype == "" | setlocal ft=txt | endif
 " Reload .vimrc on save
@@ -433,7 +299,7 @@ endif
 " Turn off CTRL-A and CTRL-X commands using base 8 for numbers starting with a zero.
 set nrformats-=octal
 " Timeout when part of a mapped key sequence or keyboard code has been received.
-set ttimeout timeoutlen=200 ttimeoutlen=100
+set ttimeout timeoutlen=700 ttimeoutlen=100
 " When a file has been detected to have been changed outside of Vim and it has
 " not been changed inside of Vim, automatically read it again.
 set autoread
@@ -555,3 +421,137 @@ let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
+
+
+" clang-format
+"--------------------------------------------------------------------------------
+let g:clang_format#detect_style_file = 1
+
+
+" Key bindings based on built-in features
+"================================================================================
+" Easier window navigation
+nnoremap <m-j> <c-w>j
+nnoremap <m-k> <c-w>k
+nnoremap <m-l> <c-w>l
+nnoremap <m-h> <c-w>h
+
+" Window resizing
+nnoremap <esc>m <C-w>3+
+nnoremap <esc>n <C-w>3-
+nnoremap <C-n> <C-W>3<
+nnoremap <C-m> <C-W>3>
+
+" Moving windows
+nnoremap <esc>K <C-w>K
+nnoremap <esc>J <C-w>J
+nnoremap <esc>H <C-w>H
+nnoremap <esc>L <C-w>L
+nnoremap <esc>R <C-w>R
+nnoremap <esc>r <C-w>r
+
+" Press left and right arrow keys to switch buffers
+nnoremap <silent> <right> :bn<CR>
+nnoremap <silent> <left> :bp<CR>
+
+" Toggle paste mode
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
+" Tab mappings
+map <leader>tt :tabnew<cr>
+map <leader>te :tabedit
+map <leader>tc :tabclose<cr>
+map <leader>to :tabonly<cr>
+map <leader>tn :tabnext<cr>
+map <leader>tp :tabprevious<cr>
+map <leader>tf :tabfirst<cr>
+map <leader>tl :tablast<cr>
+map <leader>tm :tabmove
+
+map <esc>1 1gt
+map <esc>2 2gt
+map <esc>3 3gt
+map <esc>4 4gt
+map <esc>5 5gt
+map <esc>6 6gt
+map <esc>7 7gt
+
+nnoremap <leader>bd :BD
+nnoremap <leader>bq :BD!
+
+
+" Save as root
+cmap w!! %!sudo tee > /dev/null %
+
+" Scroll 3 lines with arrow keys
+noremap <down> 3<C-e>
+noremap <up> 3<C-y>
+
+" Press <C-v> to paste with pastemode, <C-f> for old <C-v> functionality.
+inoremap <C-f> <C-v>
+inoremap <C-v> <ESC>"+p`]a
+
+" Allow deleting selection without updating the yank buffer
+vnoremap x "_x
+vnoremap X "_X
+
+" Press <ESC> twice to unhilight
+map <ESC><ESC> :noh<CR>
+
+" Mapping to quickly change curly braces to K&R style
+map <leader>[] :%s/n[ \t\n]*{/ {/g<CR>
+
+" Save using :ww in addition to :w<cr>
+cmap ww w<cr>
+
+" Enter command-line mode without having to press the shift key
+nnoremap ; :
+vnoremap ; :
+
+" Swap lines
+nnoremap <C-j> :m+<CR>==
+nnoremap <C-k> :m-2<CR>==
+
+" Run Flake8
+autocmd FileType python map <buffer> <leader>8 :call Flake8()<CR>
+
+" Toggle comments
+vmap <Space> <leader>ci
+nmap <S-Space> <leader>ci
+
+" press <F9> to execute the current buffer with python
+nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+
+" Press F3 to output a timestamp
+nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+
+" Ctrl-C will unhighlight
+map <C-c> :noh<CR>
+
+" Emacs-like
+inoremap <C-e> <C-o>$
+inoremap <C-a> <C-o>0
+
+" Move between long lines
+map j gj
+map k gk
+
+nnoremap <C-@> `
+
+if has("gui_running")
+    inoremap <c-h> <c-g>u<Esc>[s1z=`]A<c-g>u
+    nnoremap <c-h> [s1z=<c-o>
+else
+    " C-Y in visual mode will copy to clipboard
+    vnoremap <C-y> my"*y
+endif
+
+" Be able to undo Ctrl-U in insert mode
+inoremap <c-u> <c-g>u<c-u>
+
+nnoremap <c-d> <c-f>
+nnoremap <c-u> <c-b>
+
