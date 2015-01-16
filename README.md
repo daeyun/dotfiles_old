@@ -77,3 +77,18 @@ apt-get install cmake
 cd ~/.vim/bundle/YouCompleteMe
 ./install.sh --clang-completer
 ```
+
+#### NeoVim
+
+https://github.com/neovim/neovim/wiki/Installing
+
+```
+brew tap neovim/homebrew-neovim
+brew install --HEAD neovim
+
+pip install neovim
+pip3 install neovim
+
+ln -nsf ~/dotfiles/.vimrc ~/.nvimrc
+ln -nsf ~/dotfiles/.vim ~/.nvim
+```
