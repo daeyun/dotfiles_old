@@ -254,8 +254,10 @@ let html_no_rendering=1
 filetype plugin on
 set foldlevel=99
 
+if has("gui_running")
 " Encryption method
 setlocal cm=blowfish
+endif
 
 " Turn on syntax highlighting.
 syntax on
